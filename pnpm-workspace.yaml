@@ -3,5 +3,6 @@ packages:
   - shared
   - ui
 allowBuilds:
+  esbuild: true
   sharp: true
   unrs-resolver: true
