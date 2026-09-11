@@ -13,8 +13,10 @@
     "build": "pnpm --filter @dev-interview-challenge/ui build",
     "start": "pnpm --parallel --filter @dev-interview-challenge/api --filter @dev-interview-challenge/ui start",
     "lint": "pnpm --filter @dev-interview-challenge/ui lint",
-    "test": "pnpm --filter @dev-interview-challenge/api test",
-    "typecheck": "pnpm --recursive typecheck"
+    "test": "pnpm --recursive --if-present test",
+    "typecheck": "pnpm --recursive typecheck",
+    "test:api": "pnpm --filter @dev-interview-challenge/api test",
+    "test:ui": "pnpm --filter @dev-interview-challenge/ui test"
   },
   "devDependencies": {
     "typescript": "5.9.2"

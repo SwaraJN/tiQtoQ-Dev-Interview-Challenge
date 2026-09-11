@@ -24,7 +24,9 @@ Other commands:
 ```bash
 pnpm dev:api      # API only
 pnpm dev:ui       # UI only
-pnpm test         # API unit and HTTP tests (37 tests)
+pnpm test         # all workspaces (61 tests)
+pnpm test:api     # API unit and HTTP tests (37 tests)
+pnpm test:ui      # UI component and API-client tests (24 tests)
 pnpm typecheck    # type-check all three workspaces
 pnpm lint         # lint the UI
 pnpm build        # production UI build
@@ -97,7 +99,9 @@ rating they will ignore, so "why" is part of the contract rather than a nice-to-
 
 ## Testing
 
-37 tests, all against behaviour rather than implementation detail:
+61 tests, all against behaviour rather than implementation detail.
+
+**API (37)**
 
 - **Scoring** — every threshold boundary, including both sides of each edge.
 - **Analyser** — determinism, contract conformance, the three risk levels, evidence capture,
@@ -107,6 +111,23 @@ rating they will ignore, so "why" is part of the contract rather than a nice-to-
   analyser result, and async analyser support.
 - **HTTP** — the success path, a 400, a malformed JSON body, a 502 that does not leak internals,
   CORS, and health.
+
+**UI (24)**
+
+- **API client** — the request it sends, an unreachable API, a structured API error (message and
+  field details), an error response that is not contract-shaped, a success response that fails
+  schema validation, and an abort propagating rather than surfacing as a failure.
+- **`AnalysisResult`** — risk level, score and analyser id; a distinct badge per level; impacted
+  areas and their empty state; one heading per test category with the right tests grouped under it;
+  evidence and weight per risk factor; and the Low-with-no-factors explanation.
+- **`ChangeRiskAnalyser`** — the empty assessment state, submission disabled until the description
+  is long enough, rendering a returned analysis, trimming before sending, the busy state, an API
+  error with its details, a non-API failure falling back to a generic message without leaking it,
+  an error clearing once a later attempt succeeds, and aborting an in-flight request on unmount.
+
+The UI tests stub the API client rather than the network, so they assert what the component does
+with each outcome; the client's own handling of those outcomes is tested separately against a
+stubbed `fetch`.
 
 HTTP tests use Fastify's `inject`, so they exercise the real routing, serialisation and error
 handler without binding a port or needing a running server.
@@ -151,9 +172,9 @@ feature, but the alternative was submitting work I could not lint.
 
 ## What I would improve with more time
 
-- **Component tests for the UI.** The API is well covered; the React layer is verified manually.
-  React Testing Library over `ChangeRiskAnalyser` with a stubbed client would cover the loading,
-  error and success states.
+- **An end-to-end test.** Component and API tests both pass against a boundary that is stubbed on
+  one side. A Playwright run against a real UI and API would catch a contract drift that mocks on
+  both sides can hide.
 - **Move the signal catalogue out of code.** Weights and phrasing are the part a team will want to
   edit weekly. As configuration, with the schema validating it at startup, tuning would stop being a
   deploy.

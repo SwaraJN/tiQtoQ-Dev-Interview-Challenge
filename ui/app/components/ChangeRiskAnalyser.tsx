@@ -1,7 +1,7 @@
 "use client";
 
 import { DESCRIPTION_MAX_LENGTH, DESCRIPTION_MIN_LENGTH, type ChangeAnalysis } from "@dev-interview-challenge/shared";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ApiClientError, analyseChange } from "../../lib/api-client";
 import { AnalysisResult } from "./AnalysisResult";
@@ -21,10 +21,15 @@ export function ChangeRiskAnalyser() {
   const trimmed = description.trim();
   const canSubmit = trimmed.length >= DESCRIPTION_MIN_LENGTH && status !== "loading";
 
+  // Drop any in-flight request if the feature unmounts, so a late response
+  // cannot resolve against a component that is no longer on the page.
+  useEffect(() => () => inFlight.current?.abort(), []);
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    // A resubmission supersedes any request still in flight.
+    // Submitting is blocked while a request is in flight, but abort defensively
+    // so a superseded response can never overwrite a newer one.
     inFlight.current?.abort();
     const controller = new AbortController();
     inFlight.current = controller;
