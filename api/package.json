@@ -1,5 +1,24 @@
 {
   "name": "@dev-interview-challenge/api",
   "version": "0.0.0",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@dev-interview-challenge/shared": "workspace:*",
+    "@fastify/cors": "11.1.0",
+    "fastify": "5.6.1",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "tsx": "4.20.6",
+    "vitest": "3.2.4"
+  }
 }

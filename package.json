@@ -7,10 +7,16 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "pnpm --filter @dev-interview-challenge/ui dev",
+    "dev": "pnpm --parallel --filter @dev-interview-challenge/api --filter @dev-interview-challenge/ui dev",
+    "dev:api": "pnpm --filter @dev-interview-challenge/api dev",
+    "dev:ui": "pnpm --filter @dev-interview-challenge/ui dev",
     "build": "pnpm --filter @dev-interview-challenge/ui build",
+    "start": "pnpm --parallel --filter @dev-interview-challenge/api --filter @dev-interview-challenge/ui start",
     "lint": "pnpm --filter @dev-interview-challenge/ui lint",
-    "typecheck": "pnpm --filter @dev-interview-challenge/ui typecheck"
+    "test": "pnpm --recursive --if-present test",
+    "typecheck": "pnpm --recursive typecheck",
+    "test:api": "pnpm --filter @dev-interview-challenge/api test",
+    "test:ui": "pnpm --filter @dev-interview-challenge/ui test"
   },
   "devDependencies": {
     "typescript": "5.9.2"

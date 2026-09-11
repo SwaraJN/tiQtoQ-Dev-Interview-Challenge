@@ -42,3 +42,21 @@ button:disabled { cursor: not-allowed; opacity: 0.52; }
   .page-shell { padding: 44px 18px; }
   .workspace { grid-template-columns: 1fr; }
 }
+
+.risk-badge { display: inline-block; margin: 0 0 12px; padding: 6px 14px; border-radius: 999px; font-size: 1rem; font-weight: 700; letter-spacing: 0.02em; }
+.risk-badge--low { background: #dcfce7; color: #166534; }
+.risk-badge--medium { background: #fef3c7; color: #92400e; }
+.risk-badge--high { background: #fee2e2; color: #991b1b; }
+
+.result-card ul { margin: 0; padding-left: 20px; color: #66738a; font-size: 0.92rem; line-height: 1.6; }
+.result-card h4 { margin: 14px 0 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4f46e5; }
+.test-group:first-of-type h4 { margin-top: 0; }
+
+.tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.tag-list li { border: 1px solid #dfe4f0; border-radius: 999px; padding: 4px 12px; background: #f7f8fc; font-size: 0.85rem; color: #3d4a63; }
+
+.rationale li { margin-bottom: 8px; }
+.rationale .weight { color: #4f46e5; font-weight: 700; }
+.rationale .evidence { display: block; color: #8b96a9; font-size: 0.82rem; }
+.score-note { margin-top: 14px; }
+.error-card { border-style: solid; border-color: #f2b8b8; background: #fff7f7; }
